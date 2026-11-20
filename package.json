@@ -4,13 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"vite --host 0.0.0.0\" \"node --watch server/index.js\"",
+    "dev": "concurrently \"vite --host 0.0.0.0\" \"node --watch server/start.js\"",
     "dev:client": "vite --host 0.0.0.0",
-    "dev:server": "node --watch server/index.js",
+    "dev:server": "node --watch server/start.js",
     "build": "vite build",
-    "start": "node server/index.js"
+    "start": "node server/start.js"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.2.1",
     "bcryptjs": "^3.0.2",
     "better-sqlite3": "^12.2.0",
     "cors": "^2.8.5",
@@ -20,6 +21,7 @@
     "lucide-react": "^0.468.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "ws": "^8.23.0",
     "zod": "^4.0.5"
   },
   "devDependencies": {

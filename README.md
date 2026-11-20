@@ -21,13 +21,15 @@ Configure `ADMIN_EMAIL`, `ADMIN_PASSWORD` e `JWT_SECRET` no `.env` antes de inic
 
 Para produção em um único servidor Node, gere a interface com `npm run build`, defina `NODE_ENV=production` e inicie com `npm start`. O Express serve os arquivos de `dist` junto com a API.
 
-### Publicação na Vercel e Render
+### Publicação gratuita na Vercel
 
-A Vercel hospeda o frontend e o Render executa a API Express com SQLite em disco persistente. O arquivo `render.yaml` define o serviço e o volume de dados.
+A Vercel publica a interface e a API serverless em `api/[...path].js`. Para persistir contas e dados entre execuções, conecte um projeto Neon Postgres no plano Free.
 
-1. No Render, crie um Blueprint a partir deste repositório e confira o preço apresentado antes de confirmar. Informe `ADMIN_EMAIL` e uma nova `ADMIN_PASSWORD` nos campos privados; `JWT_SECRET` é gerado automaticamente.
-2. No projeto Vercel, adicione `VITE_API_URL` com a URL pública do serviço Render, sem barra final, no ambiente Production e faça um novo deploy.
-3. O `CORS_ORIGIN` do serviço Render deve corresponder ao domínio de produção da Vercel. Atualize-o se o domínio mudar.
+1. Crie um banco Neon Free e adicione sua connection string agrupada em `DATABASE_URL` nas variáveis Production da Vercel.
+2. Na Vercel, configure `ADMIN_EMAIL`, uma nova `ADMIN_PASSWORD` e `JWT_SECRET` com pelo menos 32 caracteres. Não use credenciais compartilhadas em chats.
+3. Faça um novo deploy. A API cria as tabelas e os dados iniciais no primeiro acesso.
+
+O SQLite continua disponível para desenvolvimento local quando `DATABASE_URL` não estiver definido. Os limites gratuitos do Neon e da Vercel podem mudar; confira os limites atuais nas respectivas contas.
 
 ## Fluxos disponíveis
 
@@ -44,6 +46,7 @@ A Vercel hospeda o frontend e o Render executa a API Express com SQLite em disco
 | --- | --- |
 | `PORT` | Porta da API (padrão `3001`) |
 | `JWT_SECRET` | Segredo de assinatura das sessões |
+| `DATABASE_URL` | Connection string do Neon Postgres em produção (opcional no desenvolvimento local) |
 | `DATABASE_PATH` | Caminho do arquivo SQLite (padrão `./data/pets.db`) |
 | `CORS_ORIGIN` | Origem permitida para chamadas cross-origin (padrão `http://localhost:5173`) |
 | `ADMIN_EMAIL` / `ADMIN_PASSWORD` | Conta administrativa inicial |
