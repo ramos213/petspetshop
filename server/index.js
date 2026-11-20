@@ -280,7 +280,7 @@ app.get("/api/admin/dashboard", auth(true, "admin"), async (_req, res) => {
     db.prepare("SELECT COUNT(*) AS total FROM orders").get(),
     db.prepare("SELECT COUNT(*) AS total FROM appointments WHERE appointment_date=? AND status!='cancelled'").get(today),
     db.prepare("SELECT id,name,stock FROM products WHERE active=1 AND stock<=8 ORDER BY stock LIMIT 8").all(),
-    db.prepare("SELECT product_name AS name,SUM(quantity) AS sold FROM order_items GROUP BY product_id ORDER BY sold DESC LIMIT 5").all(),
+    db.prepare("SELECT product_name AS name,SUM(quantity) AS sold FROM order_items GROUP BY product_id,product_name ORDER BY sold DESC LIMIT 5").all(),
     db.prepare("SELECT id,customer_name,total_cents,status,created_at FROM orders ORDER BY id DESC LIMIT 6").all(),
     db.prepare("SELECT s.name,COUNT(a.id) AS bookings FROM services s LEFT JOIN appointments a ON a.service_id=s.id GROUP BY s.id ORDER BY bookings DESC LIMIT 5").all(),
   ]);
