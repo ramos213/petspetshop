@@ -19,7 +19,15 @@ Abra <http://localhost:5173>. A API fica disponível em <http://localhost:3001/a
 
 Configure `ADMIN_EMAIL`, `ADMIN_PASSWORD` e `JWT_SECRET` no `.env` antes de iniciar a aplicação. Não há credenciais administrativas padrão: a senha é obrigatória e o administrador é criado apenas na primeira inicialização do banco.
 
-Para produção, gere a interface com `npm run build`, defina `NODE_ENV=production` e inicie com `npm start`. O Express serve os arquivos de `dist` junto com a API.
+Para produção em um único servidor Node, gere a interface com `npm run build`, defina `NODE_ENV=production` e inicie com `npm start`. O Express serve os arquivos de `dist` junto com a API.
+
+### Publicação na Vercel e Render
+
+A Vercel hospeda o frontend e o Render executa a API Express com SQLite em disco persistente. O arquivo `render.yaml` define o serviço e o volume de dados.
+
+1. No Render, crie um Blueprint a partir deste repositório e confira o preço apresentado antes de confirmar. Informe `ADMIN_EMAIL` e uma nova `ADMIN_PASSWORD` nos campos privados; `JWT_SECRET` é gerado automaticamente.
+2. No projeto Vercel, adicione `VITE_API_URL` com a URL pública do serviço Render, sem barra final, no ambiente Production e faça um novo deploy.
+3. O `CORS_ORIGIN` do serviço Render deve corresponder ao domínio de produção da Vercel. Atualize-o se o domínio mudar.
 
 ## Fluxos disponíveis
 

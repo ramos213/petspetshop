@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 
 const money = (value) => Number(value || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+const apiBase = (import.meta.env.VITE_API_URL || "").replace(/\/+$/, "");
 const today = () => {
   const date = Object.fromEntries(new Intl.DateTimeFormat("en-CA", {
     timeZone: "America/Sao_Paulo", year: "numeric", month: "2-digit", day: "2-digit",
@@ -17,7 +18,7 @@ const photo = (url, width = 900) => `${url}${url.includes("?") ? "&" : "?"}auto=
 
 async function request(path, options = {}) {
   const token = localStorage.getItem("pets-token");
-  const response = await fetch(`/api${path}`, {
+  const response = await fetch(`${apiBase}/api${path}`, {
     ...options,
     headers: {
       ...(options.body ? { "Content-Type": "application/json" } : {}),
